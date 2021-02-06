@@ -1,0 +1,47 @@
+{
+  "name": "iryouhin-ten",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint '*/**/*.{js,ts,tsx}'",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "cross-env FORCE_COLOR=true jest ./__test__",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.4.0",
+    "@reduxjs/toolkit": "^1.5.0",
+    "antd": "^4.11.2",
+    "axios": "^0.21.1",
+    "next": "10.0.6",
+    "next-redux-wrapper": "^6.0.2",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-redux": "^7.2.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@storybook/addon-actions": "^6.1.16",
+    "@storybook/addon-essentials": "^6.1.16",
+    "@storybook/addon-links": "^6.1.16",
+    "@storybook/addon-viewport": "^6.1.16",
+    "@storybook/preset-typescript": "^3.0.0",
+    "@storybook/react": "^6.1.16",
+    "@types/node": "^14.14.22",
+    "@types/react": "^17.0.0",
+    "@types/react-redux": "^7.1.16",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "babel-loader": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.18.0",
+    "jest": "^26.6.3",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6",
+    "ts-jest": "^26.5.0",
+    "typescript": "^4.1.3"
+  }
+}
