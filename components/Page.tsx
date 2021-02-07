@@ -1,5 +1,5 @@
 import { ShoppingCartOutlined, ShoppingOutlined } from "@ant-design/icons";
-import { Affix, Badge, Button, Col, Layout, Row } from "antd";
+import { Badge, Button, Col, Layout, Row } from "antd";
 import { BasicProps } from "antd/lib/layout/layout";
 import { NextPage } from "next";
 import Head from "next/head";
@@ -24,15 +24,6 @@ type PageProps = {
  * the menu and footer with buttons for mobiles devices are already included.
  */
 const Page: NextPage<PageProps> = ({ children, bodyStyle = {} }) => {
-  const contentStyle = Object.assign(
-    {
-      marginTop: "64px",
-      padding: "16px 0px",
-      overflowX: "hidden",
-    },
-    bodyStyle
-  ) as BasicProps;
-
   const cart = useSelector((state: RootState) => state.cart);
 
   return (
@@ -42,10 +33,8 @@ const Page: NextPage<PageProps> = ({ children, bodyStyle = {} }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageHeader badges={{ cart: cart.length }} />
-      <Content style={contentStyle}>
-        {children}
-        <PageFooter badges={{ cart: cart.length }} />
-      </Content>
+      <PageContent style={bodyStyle}>{children}</PageContent>
+      <FooterMenu badges={{ cart: cart.length }} />
     </Layout>
   );
 };
@@ -118,51 +107,60 @@ const PageHeader = ({ badges }) => {
 };
 
 /**
+ * Container for the main part of the application. Its is the entire space between
+ * the header and the dynamically displayed bottom menu.
+ */
+const PageContent = ({ children, style }) => {
+  const contentStyle = Object.assign(
+    {
+      marginTop: "64px",
+      overflowX: "hidden",
+    },
+    style
+  ) as BasicProps;
+  return <Content style={contentStyle}>{children}</Content>;
+};
+
+/**
  * This page footer is visible only on mobile devices. It displays buttons to
  * navigate through the application.
  */
-const PageFooter = ({ badges }) => {
+const FooterMenu = ({ badges }) => {
   return (
-    <Affix
-      key="affix-footer-menu"
-      offsetBottom={0}
-      style={{ position: "absolute" }}
+    <div
+      className="footer"
+      style={{
+        backgroundColor: "white",
+        width: "100vw",
+        padding: "16px 0",
+      }}
     >
-      <div
-        className="footer"
-        style={{
-          backgroundColor: "white",
-          width: "100vw",
-          padding: "16px 0",
-        }}
-      >
-        <style jsx>{`
-          @media (min-width: 480px) {
-            .footer {
-              display: none;
-            }
+      <style jsx>{`
+        @media (min-width: 480px) {
+          .footer {
+            display: none;
           }
-        `}</style>
-        <Row justify="space-around">
-          <Col>
-            <IconLink icon={<ShoppingOutlined style={{ fontSize: 32 }} />} />
-          </Col>
-          <Col>
-            <Badge
-              style={{ backgroundColor: "#1890ff" }}
-              count={badges.cart}
-              offset={[-10, 10]}
-              size="small"
-            >
-              <IconLink
-                href="/cart"
-                icon={<ShoppingCartOutlined style={{ fontSize: 32 }} />}
-              />
-            </Badge>
-          </Col>
-        </Row>
-      </div>
-    </Affix>
+        }
+      `}</style>
+      <Row justify="space-around">
+        <Col>
+          <IconLink icon={<ShoppingOutlined style={{ fontSize: 32 }} />} />
+        </Col>
+        <Col>
+          <Badge
+            style={{ backgroundColor: "#1890ff" }}
+            count={badges.cart}
+            offset={[-10, 10]}
+            size="small"
+          >
+            <IconLink
+              href="/cart"
+              icon={<ShoppingCartOutlined style={{ fontSize: 32 }} />}
+            />
+          </Badge>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
