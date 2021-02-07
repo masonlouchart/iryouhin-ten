@@ -8,7 +8,7 @@ import Page from "../components/Page";
 import { fetchCurrencies } from "../store/slices/currenciesSlices";
 import {
   fetchProducts,
-  selectAllProducts
+  selectAllProducts,
 } from "../store/slices/productsSlices";
 import { AppThunkDispatch, RootState, wrapper } from "../store/store";
 
@@ -23,7 +23,11 @@ const HomePage: NextPage = () => {
 
   return (
     <Page>
-      <Row gutter={[16, { xs: 16, sm: 16, md: 24, lg: 32 }]} justify="center">
+      <Row
+        style={{ margin: "16px 0px" }}
+        gutter={[16, { xs: 16, sm: 16, md: 24, lg: 32 }]}
+        justify="center"
+      >
         {products.map((product, index) => (
           <Col key={index} className="gutter-row">
             <Link href={`/products/${product.id}`}>

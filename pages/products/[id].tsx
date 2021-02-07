@@ -39,8 +39,14 @@ const ProductPage: NextPage = () => {
   const currency = state.currencies.selected;
   return (
     <Page bodyStyle={{ padding: 0 }}>
-      <ProductImage product={product} />
-      <ProductDetail product={product} currency={currency} />
+      <Row style={{ height: "100%" }} align="bottom">
+        <Col span={24}>
+          <ProductImage product={product} />
+        </Col>
+        <Col span={24}>
+          <ProductDetail product={product} currency={currency} />
+        </Col>
+      </Row>
     </Page>
   );
 };
@@ -55,11 +61,10 @@ const ProductImage = ({ product }) => {
   return (
     <div
       style={{
-        height: "calc(45vh)",
         alignItems: "center",
-        textAlign: "center",
         display: "flex",
         justifyContent: "center",
+        padding: "40px 20px",
       }}
     >
       <Image
@@ -83,46 +88,40 @@ const ProductImage = ({ product }) => {
 const ProductDetail = ({ product, currency }) => {
   return (
     <div
-      className="card-content"
+      className="product-detail"
       style={{
         borderRadius: "30px 30px 0 0",
         boxShadow: "0px -5px 5px lightgray",
-        padding: "16px",
+        padding: "16px 20px 32px 20px",
         margin: "auto",
       }}
     >
       <style jsx>{`
-        .card-content {
-          height: calc(55vh - 72px - 64px);
-        }
         @media (min-width: 480px) {
-          .card-content {
-            width: 60vw;
-            height: calc(55vh - 72px);
+          .product-detail {
+            max-width: 60vw;
           }
         }
       `}</style>
-      <Row>
-        <Col>
-          <Title level={3}>
-            {Product.formatPrice(product.price, currency)}
-          </Title>
-        </Col>
-        <Col flex="auto" />
-        <Col>
-          <CartButton product={product}></CartButton>
-        </Col>
-      </Row>
-      <Text type="secondary">{product.title}</Text>
-      <div
-        style={{
-          paddingTop: "16px",
-          overflow: "scroll",
-          maxHeight: "calc(100% - 72px)",
-        }}
-      >
+      <Col style={{ paddingBottom: "16px" }} span={24}>
+        <Row>
+          <Col>
+            <Title level={3} style={{ margin: 0 }}>
+              {Product.formatPrice(product.price, currency)}
+            </Title>
+          </Col>
+          <Col flex="auto" />
+          <Col>
+            <CartButton product={product}></CartButton>
+          </Col>
+        </Row>
+      </Col>
+      <Col style={{ paddingBottom: "16px" }} flex="none">
+        <Text type="secondary">{product.title}</Text>
+      </Col>
+      <Col span={24}>
         <Paragraph style={{ marginBottom: 0 }}>{product.description}</Paragraph>
-      </div>
+      </Col>
     </div>
   );
 };
