@@ -5,14 +5,15 @@ const Loading = (): ReactElement => {
   return (
     <div className="spinner">
       <style jsx>{`
-        margin: 20px 0;
-        margin-bottom: 20px;
         padding: 30px 50px;
         text-align: center;
         background: rgba(0, 0, 0, 0.05);
         border-radius: 4px;
+        display: flex;
+        align-items: center;
+        width: 100vw;
       `}</style>
-      <Spin tip="Loading..." />
+      <Spin style={{ margin: "auto" }} tip="Loading..." />
     </div>
   );
 };
