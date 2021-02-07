@@ -24,7 +24,7 @@ const HomePage: NextPage = () => {
   return (
     <Page>
       <Row
-        style={{ margin: "16px 0px" }}
+        style={{ padding: "16px 0px" }}
         gutter={[16, { xs: 16, sm: 16, md: 24, lg: 32 }]}
         justify="center"
       >
