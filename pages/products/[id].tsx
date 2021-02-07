@@ -30,15 +30,23 @@ const ProductPage: NextPage = () => {
     return <Loading />;
   }
   // Get product to display the details.
+  const productId = Number(router.query.id);
   const state = useSelector((state: RootState) => state);
-  const product = selectProductById(state, Number(router.query.id));
+  const product = selectProductById(state, productId);
   if (!product) {
     return <Loading />;
   }
   // Get currency selected by the user.
   const currency = state.currencies.selected;
+
+  // Define the current breadcrumb.
+  const route = {
+    path: `/products/${productId}`,
+    breadcrumbName: `Products / ${product.title}`,
+  };
+
   return (
-    <Page bodyStyle={{ padding: 0 }}>
+    <Page bodyStyle={{ padding: 0 }} route={route}>
       <Row style={{ height: "100%" }} align="bottom">
         <Col span={24}>
           <ProductImage product={product} />
@@ -94,6 +102,7 @@ const ProductDetail = ({ product, currency }) => {
         boxShadow: "0px -5px 5px lightgray",
         padding: "16px 20px 32px 20px",
         margin: "auto",
+        minHeight: "30vh",
       }}
     >
       <style jsx>{`

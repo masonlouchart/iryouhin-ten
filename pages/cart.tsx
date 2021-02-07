@@ -13,8 +13,13 @@ import { RootState } from "../store/store";
 const CartPage: NextPage = () => {
   const cart = useSelector((state: RootState) => state.cart);
   const currency = useSelector((state: RootState) => state.currencies.selected);
+  // Define the current breadcrumb.
+  const route = {
+    path: "cart",
+    breadcrumbName: "My Cart",
+  };
   return (
-    <Page>
+    <Page route={route}>
       <ListProduct items={cart} currency={currency} path="/products/[id]" />
     </Page>
   );

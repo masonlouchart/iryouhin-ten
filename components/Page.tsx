@@ -1,5 +1,5 @@
 import { ShoppingCartOutlined, ShoppingOutlined } from "@ant-design/icons";
-import { Badge, Button, Col, Layout, Row } from "antd";
+import { Badge, Breadcrumb, Button, Col, Layout, Row } from "antd";
 import { BasicProps } from "antd/lib/layout/layout";
 import { NextPage } from "next";
 import Head from "next/head";
@@ -15,15 +15,21 @@ import CurrencySwitcher from "./CurrencySwitcher";
 
 const { Header, Content } = Layout;
 
+type Route = {
+  path: string;
+  breadcrumbName: string;
+};
+
 type PageProps = {
   bodyStyle?: Record<string, unknown>;
+  route?: Route;
 };
 
 /**
  * This page put the children you give in its content section. The header with
  * the menu and footer with buttons for mobiles devices are already included.
  */
-const Page: NextPage<PageProps> = ({ children, bodyStyle = {} }) => {
+const Page: NextPage<PageProps> = ({ children, bodyStyle = {}, route }) => {
   const cart = useSelector((state: RootState) => state.cart);
 
   return (
@@ -32,7 +38,7 @@ const Page: NextPage<PageProps> = ({ children, bodyStyle = {} }) => {
         <title>IRH-10</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <PageHeader badges={{ cart: cart.length }} />
+      <PageHeader badges={{ cart: cart.length }} route={route} />
       <PageContent style={bodyStyle}>{children}</PageContent>
       <FooterMenu badges={{ cart: cart.length }} />
     </Layout>
@@ -45,7 +51,7 @@ export default Page;
  * to navigate through the appication. The menu inside the header is hidden on
  * mobile devices. The buttons are displayed inside the footer.
  */
-const PageHeader = ({ badges }) => {
+const PageHeader = ({ badges, route }) => {
   const dispatch = useDispatch();
   const currencies = useSelector(selectAllCurrencies);
   const selectedCurrency = useSelector(
@@ -56,10 +62,10 @@ const PageHeader = ({ badges }) => {
     <Header
       style={{
         backgroundColor: "white",
-        position: "fixed",
         zIndex: 1,
         width: "100%",
         padding: "0 16px",
+        height: "unset",
       }}
     >
       <Row wrap={false}>
@@ -81,7 +87,7 @@ const PageHeader = ({ badges }) => {
               }
             `}</style>
             <IconLink
-              text="Home"
+              text="Shop"
               icon={<ShoppingOutlined style={{ fontSize: 24 }} />}
             />
             <Badge
@@ -106,8 +112,35 @@ const PageHeader = ({ badges }) => {
           />
         </Col>
       </Row>
+      {route ? (
+        <Row>
+          <Col>
+            <PageBreadcrumb route={route} />
+          </Col>
+        </Row>
+      ) : (
+        ""
+      )}
     </Header>
   );
+};
+
+const PageBreadcrumb = ({ route }): React.ReactElement => {
+  let routes: Route[];
+  if (route) {
+    routes = [{ path: "/", breadcrumbName: "Shop" }, route];
+  }
+  function itemRender(route: Route, _, routes: Route[]) {
+    const last = routes.indexOf(route) === routes.length - 1;
+    return last ? (
+      <span>{route.breadcrumbName}</span>
+    ) : (
+      <Link href={route.path}>
+        <a>{route.breadcrumbName}</a>
+      </Link>
+    );
+  }
+  return <Breadcrumb itemRender={itemRender} routes={routes} />;
 };
 
 /**
@@ -117,7 +150,6 @@ const PageHeader = ({ badges }) => {
 const PageContent = ({ children, style }) => {
   const contentStyle = Object.assign(
     {
-      marginTop: "64px",
       overflowX: "hidden",
     },
     style
