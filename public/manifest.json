@@ -1,0 +1,8 @@
+{
+  "name": "Iryouhinten",
+  "short_name": "IRH10",
+  "lang": "en",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#ffffff"
+}

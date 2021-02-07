@@ -37,6 +37,22 @@ const Page: NextPage<PageProps> = ({ children, bodyStyle = {}, route }) => {
       <Head>
         <title>IRH-10</title>
         <link rel="icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="application-name" content="IRH10" />
+        <meta name="apple-mobile-web-app-title" content="IRH10" />
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="msapplication-navbutton-color" content="#ffffff" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <meta name="msapplication-starturl" content="/" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
       </Head>
       <PageHeader badges={{ cart: cart.length }} route={route} />
       <PageContent style={bodyStyle}>{children}</PageContent>
