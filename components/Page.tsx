@@ -80,7 +80,10 @@ const PageHeader = ({ badges }) => {
                 }
               }
             `}</style>
-            <IconLink icon={<ShoppingOutlined style={{ fontSize: 26 }} />} />
+            <IconLink
+              text="Home"
+              icon={<ShoppingOutlined style={{ fontSize: 24 }} />}
+            />
             <Badge
               style={{ backgroundColor: "#1890ff" }}
               count={badges.cart}
@@ -89,7 +92,8 @@ const PageHeader = ({ badges }) => {
             >
               <IconLink
                 href="/cart"
-                icon={<ShoppingCartOutlined style={{ fontSize: 26 }} />}
+                text="My Cart"
+                icon={<ShoppingCartOutlined style={{ fontSize: 24 }} />}
               />
             </Badge>
           </div>
@@ -168,11 +172,18 @@ const FooterMenu = ({ badges }) => {
  * Makes an icon clickable and redirecting to the given URI (without reloading
  * the entire page).
  */
-const IconLink = ({ icon, href = "/" }) => {
+const IconLink = ({ icon, href = "/", text = "" }) => {
   return (
     <Link href={href}>
       <a>
-        <Button size="large" type="text" icon={icon}></Button>
+        <Button
+          style={{ fontSize: "1.2rem" }}
+          size="large"
+          type="text"
+          icon={icon}
+        >
+          {text}
+        </Button>
       </a>
     </Link>
   );
